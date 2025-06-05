@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Administratora Panelis" %}{% endblock %}
+
+{% block content %}
+  <h1>{% trans "Admin Dashboard" %}</h1>
+  <h2>{% trans "Reģistrētie lietotāji" %}</h2>
+  <ul>
+    {% for user in users %}
+      <li>{{ user.username }} ({{ user.loma }})</li>
+    {% empty %}
+      <li>{% trans "Nav lietotāju." %}</li>
+    {% endfor %}
+  </ul>
+  <h2>{% trans "Saņemtie ziņojumi" %}</h2>
+  <ul>
+    {% for report in reports %}
+      <li>{{ report.created_at }} - {{ report.summary }}</li>
+    {% empty %}
+      <li>{% trans "Nav ziņojumu." %}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
