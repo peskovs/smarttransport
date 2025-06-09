@@ -27,7 +27,7 @@
 
                 {% if user.is_authenticated %}
                 {% if user.loma == 'transporta_operators' %}
-                <a href="{% url 'transport:operator_dashboard' %}" class="hover:text-blue-200" data-i18n="Operator Dashboard">Operator Dashboard</a>
+                <a href="{% url 'transport:operator_dashboard' %}" class="hover:text-blue-200" {% trans "Operator Dashboard" %}</a>
                 {% endif %}
 
                 {% if user.loma == 'administrators' %}

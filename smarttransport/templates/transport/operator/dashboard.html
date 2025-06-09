@@ -1,32 +1,32 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Operatora Panelis" %}{% endblock %}
+{% block title %}{% trans "Operator Dashboard" %}{% endblock %}
 
 {% block content %}
-  <h1>{% trans "Operatora Dashboard" %}</h1>
-  <h2>{% trans "Transportlīdzekļi" %}</h2>
+  <h1>{% trans "Operator Dashboard" %}</h1>
+  <h2>{% trans "Vehicles" %}</h2>
   <ul>
     {% for vehicle in vehicles %}
       <li>{{ vehicle.name }} - {{ vehicle.status }}</li>
     {% empty %}
-      <li>{% trans "Nav datu." %}</li>
+      <li>{% trans "No data" %}</li>
     {% endfor %}
   </ul>
-  <h2>{% trans "Satiksmes apstākļi" %}</h2>
+  <h2>{% trans "Traffic conditions" %}</h2>
   <ul>
     {% for cond in traffic_conditions %}
       <li>{{ cond.route }}: {{ cond.status }}</li>
     {% empty %}
-      <li>{% trans "Nav datu." %}</li>
+      <li>{% trans "No data" %}</li>
     {% endfor %}
   </ul>
-  <h2>{% trans "Jaunākie Ziņojumi" %}</h2>
+  <h2>{% trans "Latest reports" %}</h2>
   <ul>
     {% for report in latest_reports %}
       <li>{{ report.created_at }} - {{ report.summary }}</li>
     {% empty %}
-      <li>{% trans "Nav ziņojumu." %}</li>
+      <li>{% trans "No reports" %}</li>
     {% endfor %}
   </ul>
 {% endblock %}
