@@ -17,18 +17,18 @@
 
 {% block content %}
   <div class="statistics-container">
-    <h1>{% trans "Statistika" %}</h1>
+    <h1>{% trans "Statistics" %}</h1>
     <ul class="summary-stats">
-      <li><span class="label">{% trans "Vidējā aizkave:" %}</span><span class="value">{{ avg_delay }}</span></li>
-      <li><span class="label">{% trans "Avāriju skaits:" %}</span><span class="value">{{ accident_count }}</span></li>
-      <li><span class="label">{% trans "Ziņojumu skaits:" %}</span><span class="value">{{ report_count }}</span></li>
+      <li><span class="label">{% trans "Average delay:" %}</span><span class="value">{{ avg_delay }}</span></li>
+      <li><span class="label">{% trans "Accident count:" %}</span><span class="value">{{ accident_count }}</span></li>
+      <li><span class="label">{% trans "Report count:" %}</span><span class="value">{{ report_count }}</span></li>
     </ul>
     <hr>
-    <h2>{% trans "Transporta veidu sadalījums" %}</h2>
+    <h2>{% trans "Types of transport" %}</h2>
     <table class="stat-table">
       <tr>
-        <th>{% trans "Veids" %}</th>
-        <th>{% trans "Skaits" %}</th>
+        <th>{% trans "Type" %}</th>
+        <th>{% trans "Count" %}</th>
       </tr>
       {% for t in transport_types %}
       <tr>
@@ -36,15 +36,15 @@
         <td>{{ t.count }}</td>
       </tr>
       {% empty %}
-      <tr><td colspan="2">{% trans "Nav datu" %}</td></tr>
+      <tr><td colspan="2">{% trans "No data" %}</td></tr>
       {% endfor %}
     </table>
-    <h2>{% trans "Pasažieru skaits pa dienām" %}</h2>
+    <h2>{% trans "Number of passengers by day" %}</h2>
     <table class="stat-table">
       <tr>
-        <th>{% trans "Datums" %}</th>
-        <th>{% trans "Ziņojumu skaits" %}</th>
-        <th>{% trans "Vid. pasažieri" %}</th>
+        <th>{% trans "Date" %}</th>
+        <th>{% trans "Report count" %}</th>
+        <th>{% trans "Avg. pasangers" %}</th>
       </tr>
       {% for d in passenger_data %}
       <tr>
@@ -53,15 +53,15 @@
         <td>{{ d.avg_passengers|floatformat:2 }}</td>
       </tr>
       {% empty %}
-      <tr><td colspan="3">{% trans "Nav datu" %}</td></tr>
+      <tr><td colspan="3">{% trans "No data" %}</td></tr>
       {% endfor %}
     </table>
-    <h2>{% trans "Populārākie maršruti" %}</h2>
+    <h2>{% trans "Most popular routes" %}</h2>
     <table class="stat-table">
       <tr>
-        <th>{% trans "Maršruta numurs" %}</th>
-        <th>{% trans "Nosaukums" %}</th>
-        <th>{% trans "Ziņojumu skaits" %}</th>
+        <th>{% trans "Route number" %}</th>
+        <th>{% trans "Name" %}</th>
+        <th>{% trans "Report count" %}</th>
       </tr>
       {% for r in popular_routes %}
       <tr>
@@ -70,7 +70,7 @@
         <td>{{ r.report_count }}</td>
       </tr>
       {% empty %}
-      <tr><td colspan="3">{% trans "Nav datu" %}</td></tr>
+      <tr><td colspan="3">{% trans "No data" %}</td></tr>
       {% endfor %}
     </table>
   </div>

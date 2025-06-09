@@ -33,14 +33,14 @@ def home(request):
     Galvenā lapa ar projektu informāciju un ātrajiem linkiem.
     """
     quick_links = [
-        {'url': 'transport:routes_information', 'label': _('Maršruti')},
-        {'url': 'transport:traffic_information', 'label': _('Satiksmes informācija')},
-        {'url': 'transport:report_traffic', 'label': _('Ziņot satiksmi')},
-        {'url': 'transport:statistics', 'label': _('Statistikas')},
+        {'url': 'transport:routes_information', 'label': _('Routes')},
+        {'url': 'transport:traffic_information', 'label': _('Traffic information')},
+        {'url': 'transport:report_traffic', 'label': _('Report traffic')},
+        {'url': 'transport:statistics', 'label': _('Statistics')},
     ]
     context = {
         'project_name': _('SmartTransport'),
-        'description': _('Šī ir SmartTransport sistēma, kas ļauj sekot satiksmei, pārvaldīt maršrutus un ģenerēt statistikas.'),
+        'description': _('This is the SmartTransport system for route management, traffic monitoring, and analytics.'),
         'quick_links': quick_links,
     }
     return render(request, 'transport/home.html', context)
