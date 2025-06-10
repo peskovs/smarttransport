@@ -6,3 +6,12 @@ smarttransport/transport/migrations/__pycache__/
 smarttransport/users/__pycache__/
 smarttransport/users/migrations/__pycache__/
 smarttransport/smarttransport/__pycache__/
+/.idea/.gitignore
+/.idea/discord.xml
+/.idea/material_theme_project_new.xml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/smarttransport.iml
+/.idea/vcs.xml
