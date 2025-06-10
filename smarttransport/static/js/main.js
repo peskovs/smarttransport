@@ -1,8 +1,4 @@
-// Main JavaScript file for SmartTransport
-
-// (Language switching logic removed; handled server-side)
 document.addEventListener('DOMContentLoaded', function() {
-    // Mobile menu toggle
     const mobileMenuButton = document.querySelector('.md\:hidden button');
     const mobileMenu = document.querySelector('nav.hidden.md\:flex');
     
@@ -18,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Close notifications automatically after 5 seconds
+    // close notifications after 5 seconds
     const notifications = document.querySelectorAll('.container.mx-auto.px-4.py-4 > div');
     notifications.forEach(notification => {
         setTimeout(() => {
