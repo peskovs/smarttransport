@@ -2,6 +2,8 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
+{% trans "Are you sure you want to delete this report?" as confirm_delete %}
+
 {% block title %}SmartTransport - {% trans "Traffic Information" %}{% endblock %}
 
 {% block content %}
@@ -17,11 +19,11 @@
         {% trans "Notice a traffic issue that's not marked yet? Help other users by reporting it. You can report congestion, roadworks, accidents, and other traffic conditions." %}
     </p>
 </div>
-<!-- Filtri un Skata pārslēgi -->
+
+<!-- Filters and view toggles -->
 <div class="bg-white rounded-lg shadow-md p-4 mb-6">
     <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-4">
         <h2 class="text-xl font-bold mb-2 md:mb-0">{% trans "Current Traffic Conditions" %}</h2>
-
     </div>
 
     <form method="get" class="flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-4 mb-4">
@@ -30,7 +32,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-3 top-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
-                <input type="text" name="search" class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                <input type="text" name="search" value="{{ search_query }}" class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                        placeholder="{% trans 'Search by location or description...' %}">
             </div>
         </div>
@@ -38,12 +40,12 @@
         <div class="md:w-1/4">
             <div class="relative">
                 <select name="condition_type" class="w-full pl-3 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none">
-                    <option value="all">{% trans "All conditions" %}</option>
-                    <option value="sastregums">{% trans "Congestion" %}</option>
-                    <option value="cela_darbi">{% trans "Road works" %}</option>
-                    <option value="negadijums">{% trans "Accidents" %}</option>
-                    <option value="atruma_ierobezojums">{% trans "Speed limits" %}</option>
-                    <option value="cits">{% trans "Other" %}</option>
+                    <option value="all" {% if condition_type == 'all' %}selected{% endif %}>{% trans "All conditions" %}</option>
+                    <option value="sastregums" {% if condition_type == 'sastregums' %}selected{% endif %}>{% trans "Congestion" %}</option>
+                    <option value="cela_darbi" {% if condition_type == 'cela_darbi' %}selected{% endif %}>{% trans "Road works" %}</option>
+                    <option value="negadijums" {% if condition_type == 'negadijums' %}selected{% endif %}>{% trans "Accidents" %}</option>
+                    <option value="atruma_ierobezojums" {% if condition_type == 'atruma_ierobezojums' %}selected{% endif %}>{% trans "Speed limits" %}</option>
+                    <option value="cits" {% if condition_type == 'cits' %}selected{% endif %}>{% trans "Other" %}</option>
                 </select>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute right-3 top-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -54,9 +56,9 @@
         <div class="md:w-1/4">
             <div class="relative">
                 <select name="sort" class="w-full pl-3 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none">
-                    <option value="latest">{% trans "Sort by: Latest" %}</option>
-                    <option value="severity">{% trans "Sort by: Severity" %}</option>
-                    <option value="city">{% trans "Sort by: City" %}</option>
+                    <option value="latest" {% if sort_by == 'latest' %}selected{% endif %}>{% trans "Sort by: Latest" %}</option>
+                    <option value="severity" {% if sort_by == 'severity' %}selected{% endif %}>{% trans "Sort by: Severity" %}</option>
+                    <option value="city" {% if sort_by == 'city' %}selected{% endif %}>{% trans "Sort by: City" %}</option>
                 </select>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute right-3 top-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -70,13 +72,9 @@
             </button>
         </div>
     </form>
-
-
-
-    </div>
 </div>
 
-<!-- Saraksta skats -->
+<!-- List view -->
 <div class="space-y-4">
     {% for condition in conditions %}
     <div class="bg-white rounded-lg shadow-md overflow-hidden">
@@ -92,15 +90,15 @@
                         <div class="flex items-center">
                             <h3 class="font-medium text-lg mr-2">
                                 {% if condition.tips == 'sastregums' %}
-                                {% trans "Congestion" %}
+                                    {% trans "Congestion" %}
                                 {% elif condition.tips == 'cela_darbi' %}
-                                {% trans "Road works" %}
+                                    {% trans "Road works" %}
                                 {% elif condition.tips == 'negadijums' %}
-                                {% trans "Accident" %}
+                                    {% trans "Accident" %}
                                 {% elif condition.tips == 'atruma_ierobezojums' %}
-                                {% trans "Speed limit" %}
+                                    {% trans "Speed limit" %}
                                 {% else %}
-                                {% trans "Other" %}
+                                    {% trans "Other" %}
                                 {% endif %}
                             </h3>
                             <span class="px-2 py-1 bg-{% if condition.intensitate_min > 15 %}red{% elif condition.intensitate_min > 5 %}yellow{% else %}green{% endif %}-100 text-{% if condition.intensitate_min > 15 %}red{% elif condition.intensitate_min > 5 %}yellow{% else %}green{% endif %}-800 rounded-full text-xs">
@@ -137,13 +135,33 @@
                 <div class="flex items-center justify-between text-sm">
                     <div class="text-gray-500">
                         {% if condition.beigu_laiks %}
-                        {% trans "Expected resolution" %}: {{ condition.beigu_laiks|date:"d.m.Y H:i" }}
+                            {% trans "Expected resolution" %}: {{ condition.beigu_laiks|date:"d.m.Y H:i" }}
                         {% else %}
-                        {% trans "Resolution time unknown" %}
+                            {% trans "Resolution time unknown" %}
                         {% endif %}
                     </div>
-
                 </div>
+                {% with owner_id=user.id %}
+                {% with is_superuser=user.is_superuser %}
+                  {% with loma=user.loma|default_if_none:"" %}
+                    {% if owner_id == condition.lietotajs.id or is_superuser or loma == 'administrators' %}
+                    <div class="mt-2">
+                        {% if condition.id %}
+                        <form action="{% url 'transport:delete-traffic-condition' condition.id %}" method="post" class="inline">
+                          {% csrf_token %}
+                          <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                          <button type="submit"
+                                  class="text-red-600 hover:text-red-800"
+                                  onclick="return confirm('{{ confirm_delete }}');">
+                            {% trans "Delete" %}
+                          </button>
+                        </form>
+                      {% endif %}
+                      </div>
+                    {% endif %}
+                  {% endwith %}
+                {% endwith %}
+              {% endwith %}
             </div>
         </div>
     </div>
@@ -161,9 +179,5 @@
         </a>
     </div>
     {% endfor %}
-
-
 </div>
-
-
 {% endblock %}

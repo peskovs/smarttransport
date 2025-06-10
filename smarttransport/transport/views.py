@@ -8,24 +8,25 @@ from .models import *
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
+
+
 @login_required
-def delete_atsauksme(request, atsauksme_id):
-    atsauksme = get_object_or_404(Atsauksme, pk=atsauksme_id)
+def delete_traffic_condition(request, condition_id):
+    condition = get_object_or_404(SatiksmeStavoklis, pk=condition_id)
     user = request.user
-    # Only author, admin, or superuser can delete
+    is_owner = hasattr(condition, 'lietotajs') and condition.lietotajs == user
     is_admin = user.is_superuser or getattr(user, 'loma', None) == 'administrators'
-    if atsauksme.lietotajs == user or is_admin:
-        if request.method == 'POST':
-            atsauksme.delete()
-            next_url = request.POST.get('next') or request.GET.get('next') or request.META.get('HTTP_REFERER')
-            if next_url:
-                return redirect(next_url)
-            else:
-                return redirect('transport:route_details', route_id=atsauksme.marsruts.pk)
-        else:
-            return HttpResponseForbidden(_('Invalid request method.'))
+    if not (is_owner or is_admin):
+        return HttpResponseForbidden(_("You do not have permission to delete this report."))
+    if request.method == 'POST':
+        condition.delete()
+        messages.success(request, _("Report deleted successfully."))
+        next_url = request.POST.get('next') or request.GET.get('next') or request.META.get('HTTP_REFERER')
+        if next_url:
+            return redirect(next_url)
+        return redirect('transport:traffic_information')
     else:
-        return HttpResponseForbidden(_('You do not have permission to delete this review.'))
+        return HttpResponseForbidden(_("Invalid request method."))
 
 # @login_required
 def home(request):

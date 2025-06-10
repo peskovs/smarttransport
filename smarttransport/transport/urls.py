@@ -14,7 +14,7 @@ urlpatterns = [
     path('routes/', views.routes_list, name='routes_list'),
     path('routes/<int:route_id>/', views.route_details, name='route_details'),
     path('routes/<int:route_id>/atsauksme/', views.submit_atsauksme, name='submit_atsauksme'),
-    path('atsauksme/<int:atsauksme_id>/delete/', views.delete_atsauksme, name='delete_atsauksme'),
+
 
     # Pieturas
     path('stops/', views.stops_list, name='stops_list'),
@@ -23,6 +23,8 @@ urlpatterns = [
     # Satiksme
     path('traffic/', views.traffic_information, name='traffic_information'),
     path('traffic/report/', views.report_traffic, name='report_traffic'),
+    path('traffic/<int:condition_id>/delete/', views.delete_traffic_condition, name='delete-traffic-condition'),
+
 
     # Statistika
     path('statistics/', views.statistics, name='statistics'),
