@@ -1,4 +1,3 @@
-# users/forms.py
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.utils.translation import gettext_lazy as _
@@ -14,13 +13,13 @@ class UserRegistrationForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Optional fields
+        # Papildus lauku opcijas
         self.fields['first_name'].required = False
         self.fields['last_name'].required = False
         self.fields['talrunis'].required = False
-        # Make email required
+        # Obligāto lauku opcijas
         self.fields['email'].required = True
-        # Add placeholders
+        # Placeholderi
         self.fields['username'].widget.attrs.update({'placeholder': _('Username')})
         self.fields['first_name'].widget.attrs.update({'placeholder': _('First name')})
         self.fields['last_name'].widget.attrs.update({'placeholder': _('Last name')})
@@ -57,7 +56,7 @@ class UserProfileForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Make email and username required
+        # Padarīt epastu un lietotājvārdu obligātu
         self.fields['email'].required = True
         self.fields['username'].required = True
         self.fields['username'].widget.attrs.update({'placeholder': _('Username')})
