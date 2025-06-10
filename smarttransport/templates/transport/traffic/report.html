@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static i18n %}
 
-{% block title %}{% trans "Ziņot par satiksmes apstākļiem" %}{% endblock %}
+{% block title %}{% trans "Report traffic conditions" %}{% endblock %}
 
 {% block extra_head %}
   <link rel="stylesheet" href="{% static 'css/statistics.css' %}?v={{ now|date:'U' }}">
@@ -81,11 +81,11 @@
 
 {% block content %}
   <div class="traffic-report-container">
-    <h1>{% trans "Ziņot par satiksmes apstākļiem" %}</h1>
+    <h1>{% trans "Report traffic conditions" %}</h1>
     <form method="post">
       {% csrf_token %}
       {{ form.as_p }}
-      <button type="submit">{% trans "Sūtīt" %}</button>
+      <button type="submit">{% trans "Submit" %}</button>
     </form>
     <style>
       .traffic-report-container form p {
