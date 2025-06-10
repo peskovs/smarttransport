@@ -42,7 +42,7 @@ msgstr "Statistika"
 #: .\templates\base.html:30 .\templates\transport\operator\dashboard.html:4
 #: .\templates\transport\operator\dashboard.html:7
 msgid "Operator Dashboard"
-msgstr "Operatora panelis"
+msgstr "Vadītāja panelis"
 
 #: .\templates\base.html:34 .\templates\transport\admin\dashboard.html:7
 msgid "Admin Dashboard"
@@ -358,7 +358,7 @@ msgstr "Vidējais biežums (min)"
 
 #: .\templates\transport\routes\list.html:194
 msgid "Operators"
-msgstr "Operatori"
+msgstr "Vadītāji"
 
 #: .\templates\transport\statistics\index.html:22
 msgid "Average delay:"
