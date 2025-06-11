@@ -1,4 +1,3 @@
-# transport/views.py
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -108,7 +107,6 @@ def routes_list(request):
         }
         
         if route_type in type_mapping:
-            # Get route IDs that match the selected transport type
             matching_ids = []
             for route_id, data in routes_data.items():
                 if data['veids_id'] == type_mapping[route_type] or \
@@ -126,10 +124,8 @@ def routes_list(request):
     elif sort_by == 'name':
         routes = routes.order_by('nosaukums')
     elif sort_by == 'type':
-        # Since there's no transporta_veids field, we'll sort by numurs instead
         routes = routes.order_by('numurs')
 
-    # Add transport type information to each route for the template
     routes_with_types = []
     for route in routes:
         route_data = {
@@ -161,14 +157,12 @@ def routes_list(request):
         marsruts_id = route_obj.marsruts_id if hasattr(route_obj, 'marsruts_id') else getattr(route_obj, 'id', None)
         route_obj.has_schedule = KustibasGrafiks.objects.filter(marsruts_id=marsruts_id).exists()
 
-    # Calculate statistics
     total_routes = routes.count()
-    # Average frequency: schedules per route (if KustibasGrafiks is available)
+    # Average frequency: schedules per route
     from .models import KustibasGrafiks, Transportlidzeklis
     schedule_counts = [KustibasGrafiks.objects.filter(marsruts=r['route']).count() for r in routes_with_types]
     avg_frequency = round(sum(schedule_counts) / total_routes, 2) if total_routes > 0 else 0
-    # Operators count: unique operators of vehicles if such a field exists
-    if hasattr(Transportlidzeklis, 'operators'):  # If there is an operators field
+    if hasattr(Transportlidzeklis, 'operators'):
         operators_count = Transportlidzeklis.objects.values('operators').distinct().count()
     else:
         operators_count = Transportlidzeklis.objects.values('marsruts').distinct().count()
